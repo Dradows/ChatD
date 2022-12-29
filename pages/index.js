@@ -16,10 +16,9 @@ export default function Home() {
           onFinish={async e => {
             setMarkdown('');
             setLoading(true);
-            const text = await fetch(
-              '/api/chatgpt/' + e.text
-            );
+            const text = await fetch('/api/chatgpt/' + e.text);
             const json = await text.json();
+            console.log(json);
             const result = json.text;
             setMarkdown(marked.parse(result));
             setLoading(false);
