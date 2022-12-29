@@ -17,7 +17,7 @@ export default function Home() {
             setMarkdown('');
             setLoading(true);
             const text = await fetch(
-              'http://localhost:3000/api/chatgpt/' + e.text
+              '/api/chatgpt/' + e.text
             );
             const json = await text.json();
             const result = json.text;
