@@ -14,6 +14,7 @@
     "eslint": "8.30.0",
     "eslint-config-next": "^12.0.4",
     "marked": "^4.2.5",
+    "mongodb": "^4.13.0",
     "next": "13.1.1",
     "openai": "^3.1.0",
     "react": "18.2.0",
