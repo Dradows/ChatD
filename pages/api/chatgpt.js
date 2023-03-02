@@ -17,16 +17,27 @@ export default async function handler(req, res) {
     ip = req.connection.remoteAddress;
   }
   const { prompt } = req.body;
+  console.log('t0', prompt);
   const configuration = new Configuration({
     apiKey: process.env.apiKey,
   });
   const openai = new OpenAIApi(configuration);
-  const response = await openai.createCompletion({
-    model: 'text-davinci-003',
-    prompt: prompt,
-    max_tokens: 2000,
-  });
+  // const response = await openai.createCompletion({
+  //   model: 'text-davinci-003',
+  //   prompt: prompt,
+  //   max_tokens: 2000,
+  // });
+  const response = await openai
+    .createChatCompletion({
+      model: 'gpt-3.5-turbo',
+      messages: prompt,
+    })
+    .catch(e => {
+      console.log(e);
+    });
   const result = response.data.choices[0];
+  console.log('t1', response.data.choices[0].message);
+  console.log('t1', response.data.choices[0].message);
   collection.insertOne({
     ip: ip,
     prompt: prompt,

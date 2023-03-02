@@ -25,11 +25,18 @@ export default function Home() {
           onFinish={async e => {
             setMarkdown('');
             setLoading(true);
-            let prompt = '';
+            let prompt = [];
             for (let i = index.current; i < items.length; i++) {
-              prompt += items[i].label + items[i].text;
+              prompt.push({ role: 'user', content: items[i].label });
+              prompt.push({ role: 'assistant', content: items[i].text });
             }
-            prompt += e.text;
+            prompt.push({ role: 'user', content: e.text });
+            console.log(prompt);
+            console.log(
+              JSON.stringify({
+                prompt: prompt,
+              })
+            );
             const text = await fetch('/api/chatgpt', {
               method: 'POST',
               headers: {
@@ -41,7 +48,7 @@ export default function Home() {
             });
             const json = await text.json();
             console.log(json);
-            const result = json.choices[0].text;
+            const result = json.choices[0].message.content;
             const markdown = marked.parse(result);
             setTab(items.length);
             setItems([
