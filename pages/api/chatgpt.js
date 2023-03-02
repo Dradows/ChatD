@@ -42,7 +42,6 @@ export default async function handler(req, res) {
   collection.insertOne({
     ip: ip,
     prompt: prompt,
-    result: result.text,
   });
   res.status(200).json(response.data);
 }
