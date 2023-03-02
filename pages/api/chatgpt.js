@@ -17,7 +17,6 @@ export default async function handler(req, res) {
     ip = req.connection.remoteAddress;
   }
   const { prompt } = req.body;
-  console.log('t0', prompt);
   const configuration = new Configuration({
     apiKey: process.env.apiKey,
   });
@@ -35,9 +34,11 @@ export default async function handler(req, res) {
     .catch(e => {
       console.log(e);
     });
+  prompt.push({
+    role: 'assistant',
+    content: response.data.choices[0].message.content,
+  });
   const result = response.data.choices[0];
-  console.log('t1', response.data.choices[0].message);
-  console.log('t1', response.data.choices[0].message);
   collection.insertOne({
     ip: ip,
     prompt: prompt,
