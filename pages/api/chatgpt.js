@@ -43,6 +43,10 @@ export default async function handler(req, res) {
 
   const date = new Date();
 
+  var offset = now.getTimezoneOffset();
+  var hours = offset / 60;
+  date.setHours(now.getHours() + hours + 8);
+
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
