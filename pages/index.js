@@ -11,8 +11,8 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [tab, setTab] = useState(0);
   const index = useRef(0);
-  const last = useRef(0);
-  const prevToken = useRef(0);
+  // const last = useRef(0);
+  // const prevToken = useRef(0);
 
   return (
     <>
@@ -60,20 +60,29 @@ export default function Home() {
                 ),
                 key: items.length,
                 text: result,
-                token: json.usage.total_tokens - prevToken.current,
+                // token: json.usage.total_tokens - prevToken.current,
               },
             ]);
-            prevToken.current = json.usage.total_tokens;
-            while (prevToken.current > 2000) {
-              prevToken.current -= items[last.current].token;
-              last.current++;
-            }
+            // prevToken.current = json.usage.total_tokens;
+            // while (prevToken.current > 2000) {
+            //   prevToken.current -= items[last.current].token;
+            //   last.current++;
+            // }
             form.setFieldValue('text', '');
             setLoading(false);
           }}
         >
           <Form.Item lable='text' name='text'>
-            <TextArea lable='text' name='text' />
+            <TextArea
+              lable='text'
+              name='text'
+              onKeyUp={e => {
+                if (e.key == 'Enter' && e.shiftKey == false) {
+                  e.preventDefault();
+                  form.submit();
+                }
+              }}
+            />
           </Form.Item>
           <Form.Item>
             <Button
