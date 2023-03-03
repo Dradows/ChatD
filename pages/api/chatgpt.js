@@ -39,9 +39,22 @@ export default async function handler(req, res) {
     content: response.data.choices[0].message.content,
   });
   const result = response.data.choices[0];
+  // getTime year/month/day/hour/minute
+
+  const date = new Date();
+
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+  const second = date.getSeconds();
+
   collection.insertOne({
     ip: ip,
     prompt: prompt,
+    time:
+      year + '/' + month + '/' + day + ' ' + hour + ':' + minute + ':' + second,
   });
   res.status(200).json(response.data);
 }
