@@ -1,12 +1,13 @@
 import { marked } from 'marked';
-import { Input, Form, Button, Spin, Tabs } from 'antd';
+import { Input, Form, Button, Spin, Tabs, Divider, message } from 'antd';
 import { useState, useRef } from 'react';
 
 export default function Home() {
-  //add useRef
+  const [messageApi, contextHolder] = message.useMessage();
   const [items, setItems] = useState([]);
   const [markdown, setMarkdown] = useState('');
   const [form] = Form.useForm();
+  const [feedback] = Form.useForm();
   const { TextArea } = Input;
   const [loading, setLoading] = useState(false);
   const [tab, setTab] = useState(0);
@@ -17,6 +18,7 @@ export default function Home() {
   return (
     <>
       <div style={{ width: '60%', margin: 'auto' }}>
+        {contextHolder}
         <Form
           form={form}
           style={{
@@ -82,6 +84,7 @@ export default function Home() {
                   form.submit();
                 }
               }}
+              placeholder='开始对话吧！'
             />
           </Form.Item>
           <Form.Item>
@@ -111,6 +114,47 @@ export default function Home() {
           <Tabs items={items} activeKey={tab} onChange={key => setTab(key)} />
         </Spin>
         <div dangerouslySetInnerHTML={{ __html: markdown }} />
+
+        <Divider orientation='left' style={{ marginTop: 300 }}>
+          反馈/Feedback
+        </Divider>
+
+        <Form
+          form={feedback}
+          onFinish={e => {
+            console.log(e);
+            fetch('/api/feedback', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                feedback: e.feedback,
+              }),
+            });
+            messageApi.info('已提交反馈。');
+          }}
+        >
+          <Form.Item lable='feedback' name='feedback'>
+            <TextArea
+              lable='feedback'
+              name='feedback'
+              placeholder='如有对网站的建议，请在此处输入反馈。'
+              onKeyUp={e => {
+                if (e.key == 'Enter' && e.shiftKey == false) {
+                  e.preventDefault();
+                  feedback.submit();
+                }
+              }}
+            />
+          </Form.Item>
+          {/* add button */}
+          <Form.Item>
+            <Button type='primary' htmlType='submit'>
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
       </div>
     </>
   );
