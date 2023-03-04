@@ -2,6 +2,7 @@
 import { Configuration, OpenAIApi } from 'openai';
 import { NextRequest } from 'next/server';
 import { connectToDatabase } from '../../libs/mongodb';
+import { getTime } from './time.js';
 
 export default async function handler(req, res) {
   const { database } = await connectToDatabase();
@@ -17,8 +18,14 @@ export default async function handler(req, res) {
     ip = req.connection.remoteAddress;
   }
   const { feedback } = req.body;
+  const { email } = req.body;
+  const { user } = req.body;
+  const time = getTime();
   collection.insertOne({
     ip: ip,
+    user: user,
+    email: email,
+    time: time,
     feedback: feedback,
   });
   res.status(200);

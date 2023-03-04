@@ -2,6 +2,7 @@
 import { Configuration, OpenAIApi } from 'openai';
 import { NextRequest } from 'next/server';
 import { connectToDatabase } from '../../libs/mongodb';
+import { getTime } from './time.js';
 
 export default async function handler(req, res) {
   const { database } = await connectToDatabase();
@@ -41,24 +42,12 @@ export default async function handler(req, res) {
   const result = response.data.choices[0];
   // getTime year/month/day/hour/minute
 
-  const date = new Date();
-
-  let offset = date.getTimezoneOffset();
-  let hours = offset / 60;
-  date.setHours(date.getHours() + hours + 8);
-
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const hour = date.getHours();
-  const minute = date.getMinutes();
-  const second = date.getSeconds();
-
   collection.insertOne({
     ip: ip,
     prompt: prompt,
-    time:
-      year + '/' + month + '/' + day + ' ' + hour + ':' + minute + ':' + second,
+    quesiont: prompt[prompt.length - 2].content,
+    answer: prompt[prompt.length - 1].content,
+    time: getTime(),
   });
   res.status(200).json(response.data);
 }

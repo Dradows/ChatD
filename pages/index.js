@@ -19,6 +19,8 @@ export default function Home() {
     <>
       <div style={{ width: '60%', margin: 'auto' }}>
         {contextHolder}
+
+        <Divider orientation='left'>聊天/Chat</Divider>
         <Form
           form={form}
           style={{
@@ -116,7 +118,7 @@ export default function Home() {
         <div dangerouslySetInnerHTML={{ __html: markdown }} />
 
         <Divider orientation='left' style={{ marginTop: 300 }}>
-          反馈/Feedback
+          反馈或留言/Feedback
         </Divider>
 
         <Form
@@ -139,7 +141,7 @@ export default function Home() {
             <TextArea
               lable='feedback'
               name='feedback'
-              placeholder='如有对网站的建议，请在此处输入反馈。'
+              placeholder='如有对网站的建议，或者想对我说的话，请在此处留言。'
               onKeyUp={e => {
                 if (e.key == 'Enter' && e.shiftKey == false) {
                   e.preventDefault();
@@ -147,6 +149,21 @@ export default function Home() {
                 }
               }}
             />
+          </Form.Item>
+          {/* add email */}
+          <Form.Item lable='user' name='user'>
+            <Input
+              lable='user'
+              name='user'
+              placeholder='用户名（可选）'
+            ></Input>
+          </Form.Item>
+          <Form.Item lable='email' name='email'>
+            <Input
+              lable='email'
+              name='email'
+              placeholder='联系方式（可选）'
+            ></Input>
           </Form.Item>
           {/* add button */}
           <Form.Item>
