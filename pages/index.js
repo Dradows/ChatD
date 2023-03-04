@@ -104,7 +104,7 @@ export default function Home() {
                 setItems([]);
                 index.current = 0;
                 // last.current = 0;
-                prevToken.current = 0;
+                // prevToken.current = 0;
               }}
             >
               Reset
