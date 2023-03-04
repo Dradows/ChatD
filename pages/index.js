@@ -103,7 +103,7 @@ export default function Home() {
                 setTab(0);
                 setItems([]);
                 index.current = 0;
-                last.current = 0;
+                // last.current = 0;
                 prevToken.current = 0;
               }}
             >
