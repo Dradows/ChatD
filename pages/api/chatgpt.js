@@ -42,6 +42,7 @@ export default async function handler(req, res) {
   const result = response.data.choices[0];
   // getTime year/month/day/hour/minute
 
+  res.status(200).json(response.data);
   collection.insertOne({
     ip: ip,
     prompt: prompt,
@@ -49,5 +50,4 @@ export default async function handler(req, res) {
     answer: prompt[prompt.length - 1].content,
     time: getTime(),
   });
-  res.status(200).json(response.data);
 }
