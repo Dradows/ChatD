@@ -49,6 +49,11 @@ export default function Home() {
               body: JSON.stringify({
                 prompt: prompt,
               }),
+            }).catch(e => {
+              messageApi.error(
+                '访问超时，请重试。\n受限于免费服务器，单次访问的延迟上限仅为10s，而部分问题gpt-3的回答可能需要更长的时间，因此若同一个问题多次访问均超时，请更换问题。'
+              );
+              setLoading(false);
             });
             const json = await text.json();
             console.log(json);

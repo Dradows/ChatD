@@ -1,6 +1,4 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { Configuration, OpenAIApi } from 'openai';
-import { NextRequest } from 'next/server';
 import { connectToDatabase } from '../../libs/mongodb';
 import { getTime } from './time.js';
 
