@@ -53,7 +53,12 @@ export default function Home() {
             const json = await text.json();
             console.log(json);
             const result = json.choices[0].message.content;
+            prompt.push({
+              role: 'assistant',
+              content: result,
+            });
             const markdown = marked.parse(result);
+
             setTab(items.length);
             setItems([
               ...items,
@@ -74,6 +79,15 @@ export default function Home() {
             // }
             form.setFieldValue('text', '');
             setLoading(false);
+            fetch('/api/check', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                prompt: prompt,
+              }),
+            });
           }}
         >
           <Form.Item lable='text' name='text'>
