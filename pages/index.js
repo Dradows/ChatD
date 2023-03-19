@@ -124,7 +124,7 @@ export default function Home() {
               htmlType='submit'
               style={{ marginRight: '20px' }}
             >
-              Submit
+              提交/Submit
             </Button>
             <Button
               htmlType='button'
@@ -136,7 +136,7 @@ export default function Home() {
                 // prevToken.current = 0;
               }}
             >
-              Reset
+              重置/Reset
             </Button>
           </Form.Item>
         </Form>
