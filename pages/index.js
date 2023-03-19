@@ -11,6 +11,7 @@ export default function Home() {
   const { TextArea } = Input;
   const [loading, setLoading] = useState(false);
   const [tab, setTab] = useState(0);
+  const [disabled, setDisabled] = useState(false);
   const index = useRef(0);
   // const last = useRef(0);
   // const prevToken = useRef(0);
@@ -23,10 +24,12 @@ export default function Home() {
         <Divider orientation='left'>聊天/Chat</Divider>
         <Form
           form={form}
+          disabled={disabled}
           style={{
             paddingTop: '20px',
           }}
           onFinish={async e => {
+            setDisabled(true);
             setMarkdown('');
             setLoading(true);
             let prompt = [];
@@ -55,11 +58,12 @@ export default function Home() {
             if ('errorMessage' in json) {
               messageApi.open({
                 type: 'error',
-                duration: 20,
+                duration: 10,
                 content:
-                  '访问超时，请重试。受限于免费服务器，单次访问的延迟上限仅为10s，而部分问题gpt-3.5的回答可能需要更长的时间，因此若同一个问题多次访问均超时，请更换问题。',
+                  '访问超时，请重试。若同一个问题多次访问均超时，请尝试更换问题。',
               });
               setLoading(false);
+              setDisabled(false);
               return;
             }
             const result = json.choices[0].message.content;
@@ -89,6 +93,7 @@ export default function Home() {
             // }
             form.setFieldValue('text', '');
             setLoading(false);
+            setDisabled(false);
             fetch('/api/check', {
               method: 'POST',
               headers: {
