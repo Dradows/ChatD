@@ -53,6 +53,7 @@ export default function Home() {
                 prompt: prompt,
               }),
             });
+            console.log(text);
             const json = await text.json().catch(e => {
               console.log(e);
               return { errorMessage: 'error' };
