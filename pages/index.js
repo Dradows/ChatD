@@ -1,8 +1,9 @@
 import { marked } from 'marked';
 import { Input, Form, Button, Spin, Tabs, Divider, message } from 'antd';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 export default function Home() {
+  const textAreaRef = useRef(null);
   const [messageApi, contextHolder] = message.useMessage();
   const [items, setItems] = useState([]);
   const [markdown, setMarkdown] = useState('');
@@ -15,6 +16,14 @@ export default function Home() {
   const index = useRef(0);
   // const last = useRef(0);
   // const prevToken = useRef(0);
+
+  //insert function
+
+  useEffect(() => {
+    textAreaRef.current.focus({
+      cursor: 'start',
+    });
+  }, [disabled]);
 
   return (
     <>
@@ -37,7 +46,7 @@ export default function Home() {
               prompt.push({ role: 'user', content: items[i].label });
               prompt.push({ role: 'assistant', content: items[i].text });
             }
-            prompt.push({ role: 'user', content: e.text });
+            prompt.push({ role: 'user', content: e.question });
             console.log(prompt);
             console.log(
               JSON.stringify({
@@ -81,7 +90,7 @@ export default function Home() {
             setItems([
               ...items,
               {
-                label: e.text,
+                label: e.question,
                 children: (
                   <div dangerouslySetInnerHTML={{ __html: markdown }} />
                 ),
@@ -95,9 +104,12 @@ export default function Home() {
             //   prevToken.current -= items[last.current].token;
             //   last.current++;
             // }
-            form.setFieldValue('text', '');
+            form.setFieldValue('question', '');
             setLoading(false);
             setDisabled(false);
+            textAreaRef.current.focus({
+              cursor: 'start',
+            });
             fetch('/api/check', {
               method: 'POST',
               headers: {
@@ -109,10 +121,10 @@ export default function Home() {
             });
           }}
         >
-          <Form.Item lable='text' name='text'>
+          <Form.Item lable='question' name='question'>
             <TextArea
-              lable='text'
-              name='text'
+              lable='question'
+              name='question'
               onKeyUp={e => {
                 if (e.key == 'Enter' && e.shiftKey == false) {
                   e.preventDefault();
@@ -120,6 +132,7 @@ export default function Home() {
                 }
               }}
               placeholder='开始对话吧！'
+              ref={textAreaRef}
             />
           </Form.Item>
           <Form.Item>
