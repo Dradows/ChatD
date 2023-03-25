@@ -125,6 +125,11 @@ export default function Home() {
             <TextArea
               lable='question'
               name='question'
+              onKeyDown={e => {
+                if (e.key == 'Enter' && e.shiftKey == false) {
+                  e.preventDefault();
+                }
+              }}
               onKeyUp={e => {
                 if (e.key == 'Enter' && e.shiftKey == false) {
                   e.preventDefault();
