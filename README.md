@@ -1,3 +1,13 @@
+如果要在本地运行，需在根目录创建.env.local文件，并按以下格式添加chatgpt的key和mongodb的连接地址（非必须，用于保存对话）。如果部署于托管平台，在环境变量中添加。
+
+apiKey=*****
+
+mongoUri=mongodb+srv://*****
+
+
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
