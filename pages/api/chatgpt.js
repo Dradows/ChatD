@@ -25,7 +25,7 @@ export default async function handler(req, res) {
 
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST');
-  //add content-type
-  res.setHeader('Content-Type', 'application/json');
+  //add cors content-type
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.status(200).json(response.data);
 }
