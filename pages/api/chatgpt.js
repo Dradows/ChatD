@@ -2,6 +2,7 @@
 import { Configuration, OpenAIApi } from 'openai';
 
 export default async function handler(req, res) {
+  req.setHeader('Content-Type', 'application/json');
   const { prompt } = req.body;
   const configuration = new Configuration({
     apiKey: process.env.apiKey,
