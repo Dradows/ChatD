@@ -17,9 +17,10 @@ export default async function handler(req, res) {
   } else {
     ip = req.connection.remoteAddress;
   }
-  const { feedback } = req.body;
-  const { email } = req.body;
-  const { user } = req.body;
+  const body = JSON.parse(req.body);
+  const feedback = body.feedback;
+  const email = body.email;
+  const user = body.user;
   const time = getTime();
   collection.insertOne({
     ip: ip,

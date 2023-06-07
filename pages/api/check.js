@@ -15,7 +15,7 @@ export default async function handler(req, res) {
   } else {
     ip = req.connection.remoteAddress;
   }
-  const { prompt } = req.body;
+  const prompt = JSON.parse(req.body).prompt;
   // getTime year/month/day/hour/minute
   collection.insertOne({
     ip: ip,

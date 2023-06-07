@@ -55,9 +55,6 @@ export default function Home() {
             );
             const text = await fetch('/api/chatgpt', {
               method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
               body: JSON.stringify({
                 prompt: prompt,
               }),
@@ -112,9 +109,6 @@ export default function Home() {
             });
             fetch('/api/check', {
               method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
               body: JSON.stringify({
                 prompt: prompt,
               }),
@@ -178,9 +172,6 @@ export default function Home() {
             console.log(e);
             fetch('/api/feedback', {
               method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
               body: JSON.stringify({
                 feedback: e.feedback,
               }),
