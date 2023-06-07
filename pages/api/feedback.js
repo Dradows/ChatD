@@ -28,5 +28,7 @@ export default async function handler(req, res) {
     time: time,
     feedback: feedback,
   });
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST');
   res.status(200);
 }
